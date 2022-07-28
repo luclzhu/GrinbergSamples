@@ -1,7 +1,6 @@
 {% extends 'storage/main.html'%}
 {%block content%}
 
-<br>
 <div class="row">
     <div class="col-md">
         <div class="card card-body" style = 'background-color:silver'>
@@ -15,37 +14,39 @@
             <table class="table table-striped">
                 <tr class = 'table-dark' style="text-align:center">
                     <th>Name</th>
+                    <th>Age at Death</th>
+                    <th>Time of Death</th>
+                    <th>Day of Death</th>
+                    <th>Sex</th>
                     <th>Case</th>
                     <th>Braak Stage</th>
                     <th>Date Received</th>
-                    <th>Description</th>
-                    <th>Age at Death</th>
-                    <th>Time of Death</th>
-                    <th>Sex</th>
                     {% for c in columns %}
                     <th>
-                    <a class = 'btn btn-info btn-sm' href="{% url 'update_var' c.id %}">{{c.title}}</a>
+                    <a class = 'btn btn-info btn-sm' href="{% url 'update_var' c.id %}">{{c.display_title}}</a>
                         <a class = 'btn btn-danger btn-sm' href="{% url 'delete_var' c.id%}">&#215;</a>
                     </th>
                         {%endfor%}
+                    <th>Notes</th>
                     <th></th>
                 </tr>
 
-                {% for i in samples %}
+                {% for sample in samples %}
                 <tr style="text-align:center">
-                    <td>{{i.name}}</td>
-                    <td>{{i.case}}</td>
-                    <td>{{i.braak}}</td>
-                    <td>{{i.date_received|default_if_none:"---"}}</td>
-                    <td>{{i.description|default_if_none:"---"}}</td>
-                    <td>{{i.age_at_death|default_if_none:"---"}}</td>
-                    <td>{{i.time_of_death|default_if_none:"---"}}</td>
-                    <td>{{i.sex|default_if_none:"---"}}</td>
-                    <td>{{i.custom1|default_if_none:"---"}}</td>
-                    <td>{{i.custom2|default_if_none:"---"}}</td>
-                    <td>{{i.custom3|default_if_none:"---"}}</td>
-                    <td><a class = 'btn btn-primary btn-sm' href="{% url 'update_sample' i.id %}">Update</a>
-                    <a class = 'btn btn-danger btn-sm' href="{% url 'delete_sample' i.id %}"> Delete </a></td>
+                    <td>{{sample.name}}</td>
+                    <td>{{sample.age_at_death|default_if_none:"---"}}</td>
+                    <td>{{sample.time_of_death|default_if_none:"---"}}</td>
+                    <td>{{sample.day_of_death|default_if_none:"---"|date:"d/m/Y"}}</td>
+                    <td>{{sample.sex|default_if_none:"---"}}</td>
+                    <td>{{sample.case}}</td>
+                    <td>{{sample.braak}}</td>
+                    <td>{{sample.date_received|default_if_none:"---"|date:"d/m/Y"}}</td>
+                    {%for custom_data in sample.unpacked_list%}
+                        <td>{{custom_data|default_if_none:"---"}}</td>
+                    {%endfor%}
+                    <td>{{sample.description|default_if_none:"---"}}</td>
+                    <td><a class = 'btn btn-primary btn-sm' href="{% url 'update_sample' sample.id %}">Update</a>
+                    <a class = 'btn btn-danger btn-sm' href="{% url 'delete_sample' sample.id %}"> Delete </a></td>
                 </tr>
                 {% endfor %}
 

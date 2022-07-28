@@ -1,0 +1,18 @@
+{% extends 'storage/main.html'%}
+{%block content%}
+<a class = 'btn btn-warning' href = "{% url 'home' %}">&#8592;</a>
+    <form method = 'POST' action="">
+        {%csrf_token%}
+        <label for='UI_title'>Column Title</label><br>
+        <input type = 'text' id = 'UI_title' name = 'UI_title'><br>
+        <label for='data_type'>Data Type</label><br>
+        <select id="data_type" name="data_type">
+            <option value="IntegerField">Integer</option>
+            <option value="DateTimeField">Date and Time</option>
+            <option value="DateField">Date</option>
+            <option value="BooleanField">True or False</option>
+            <option value="CharField">Other</option>
+        </select><br>
+        <button type = 'submit', name = 'continue', value = 'continue'>Continue</button>
+    </form>
+{%endblock content%}

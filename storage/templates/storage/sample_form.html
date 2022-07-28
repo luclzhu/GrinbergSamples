@@ -1,6 +1,7 @@
 {% extends 'storage/main.html'%}
 {%block content%}
-
+{{form.media}}
+<a class = 'btn btn-warning' href = "{% url 'home' %}">&#8592;</a>
 <form action = "" method = "POST">
     {%csrf_token%}
     {{form.as_p}}

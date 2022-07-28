@@ -1,12 +1,22 @@
 from django.forms import ModelForm
-from .models import Sample, CustomColumn
+from django import forms
+from storage.models import Sample, UserCustomColumn
+from .widgets import TimePickerInput, DatePickerInput
+from django_json_widget.widgets import JSONEditorWidget
 
 class SampleForm(ModelForm):
     class Meta:
         model = Sample
         fields = '__all__'
+        widgets = {
+            'date_received' : DatePickerInput(),
+            'time_of_death': TimePickerInput(),
+            'day_of_death' : DatePickerInput(),
+            'custom_values' : JSONEditorWidget,
+        }
 
-class CustomColumnForm(ModelForm):
+
+class UserCustomColumnForm(ModelForm):
     class Meta:
-        model = CustomColumn
+        model = UserCustomColumn
         fields = '__all__'
